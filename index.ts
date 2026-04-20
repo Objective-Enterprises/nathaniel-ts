@@ -1,3 +1,8 @@
+type StringAndSomething <T> = string | T
+
+const stringOrNumber: StringAndSomething<number> = 'a'
+
+
 interface Delivery <Cargo> {
   from: string
   to: string
@@ -14,23 +19,35 @@ const schoolDelivery: Delivery<string[]> = {
   from: "bus stop",
   to: 'school',
   price: 0,
-  cargo: ['Dorothy', 'Zelda', 'Tallulah']
+  cargo: ['Dorothy', 'Zelda', 'Tallulah'] // What studnet names
 }
 
-function receiveDelivery <T> (cargo: T): T {
+// function receiveDelivery (cargo: number | string[]) {
+//   console.log('I received this cargo:', cargo)
+//   return cargo
+// }
+const auditor = 'David'
+function receiveDelivery <T> (cargo: T) {
   console.log('I received this cargo:', cargo)
-  return cargo
+  const receipt = {
+    data: cargo,
+    timestamp: new Date(),
+    auditor
+  }
+  return receipt
 }
 
-const bakeryReceived = receiveDelivery(bakeryDelivery.cargo)
-const schoolReceived = receiveDelivery(schoolDelivery.cargo)
-function formatNumber (value: number) {
-  const formatted = value.toFixed(2) // 5 -> 5.00
+const bakeryReceipt = receiveDelivery(bakeryDelivery.cargo)
+const schoolReceipt = receiveDelivery(schoolDelivery.cargo)
+
+function printNumber (value: number) {
+  const formatted = value.toFixed(2) // 1.00
   console.log(formatted)
 }
-formatNumber(bakeryReceived)
-function formatString (value: string[]) {
+printNumber(bakeryReceipt.data)
+
+function printStrings (value: string[]) {
   const formatted = value.map(v => v.toUpperCase())
   console.log(formatted)
 }
-formatString(schoolReceived)
+printStrings(schoolReceipt.data)
